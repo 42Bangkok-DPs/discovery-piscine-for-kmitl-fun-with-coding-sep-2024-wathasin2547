@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon</title>
+    <style>
+    #balloon {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border-radius: 50%;
+            position: relative;
+            margin: 100px auto;
+            transition: all 0.2s ease;
+    }</style>
+</head>
+<body>
+    <div id="balloon"></div>
+    <script>const balloon = document.getElementById('balloon');
+        let size = 200;
+        let colorIndex = 0;
+        const colors = ['red', 'green', 'blue'];
+        const maxSize = 420;
+        const minSize = 200;
+        
+        balloon.addEventListener('click', () => {
+            // Increase the size
+            size += 10;
+            
+            // Change color
+            colorIndex = (colorIndex + 1) % colors.length;
+            balloon.style.backgroundColor = colors[colorIndex];
+        
+            // Apply the new size
+            balloon.style.width = size + 'px';
+            balloon.style.height = size + 'px';
+        
+            // If balloon size exceeds maxSize, reset it and reverse the color
+            if (size > maxSize) {
+                size = minSize;
+                balloon.style.width = size + 'px';
+                balloon.style.height = size + 'px';
+                // Reverse the color order
+                colorIndex = (colorIndex - 1 + colors.length) % colors.length;
+                balloon.style.backgroundColor = colors[colorIndex];
+            }
+        });
+        
+        balloon.addEventListener('mouseover', () => {
+            // Shrink the size
+            size = Math.max(size - 5, minSize);
+        
+            // Change color in reverse order
+            colorIndex = (colorIndex - 1 + colors.length) % colors.length;
+            balloon.style.backgroundColor = colors[colorIndex];
+        
+            // Apply the new size
+            balloon.style.width = size + 'px';
+            balloon.style.height = size + 'px';
+        });
+        </script>
+</body>
+</html>
