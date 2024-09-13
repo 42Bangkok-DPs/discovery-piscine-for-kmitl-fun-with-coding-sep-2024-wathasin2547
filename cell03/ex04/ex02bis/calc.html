@@ -36,7 +36,6 @@
             background-color: #45a049;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- โหลด jQuery -->
 </head>
 <body>
 
@@ -55,67 +54,72 @@
     </form>
 
     <script>
-        $(document).ready(function() {
-            $('#calculator').submit(function(event) {
-                event.preventDefault();
+        const form = document.getElementById('calculator');
+        
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const leftOperand = document.getElementById('leftOperand').value.trim();
+            const operator = document.getElementById('operator').value;
+            const rightOperand = document.getElementById('rightOperand').value.trim();
+
+
+            function isValidNumber(value) {
+                return !isNaN(value) && value !== '';
+            }
+
+
+            if (!isValidNumber(leftOperand) || !isValidNumber(rightOperand) || leftOperand < 0 || rightOperand < 0) {
+                alert('Error: Please enter valid numbers for the operands.');
+                return;
+            }
+
+            const num1 = parseFloat(leftOperand);
+            const num2 = parseFloat(rightOperand);
+
+            let result;
+
+
+            if ((operator === '/' && num2 === 0) || (operator === '%' && num2 === 0)) {
+                alert("It's over 9000!");
+                result = "It's over 9000!";
+                console.log(result);
+            } else {
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        result = num1 / num2;
+                        break;
+                    case '%':
+                        result = num1 % num2;
+                        break;
+                    default:
+                        alert('Error: Invalid operator.');
+                        return;
+                }
+
                 
-                const leftOperand = $('#leftOperand').val().trim();
-                const operator = $('#operator').val();
-                const rightOperand = $('#rightOperand').val().trim();
-
-
-                function isValidNumber(value) {
-                    return !isNaN(value) && value !== '';
-                }
-
-                if (!isValidNumber(leftOperand) || !isValidNumber(rightOperand) || leftOperand < 0 || rightOperand < 0) {
-                    alert('Error: Please enter valid numbers for the operands.');
-                    return;
-                }
-
-                const num1 = parseFloat(leftOperand);
-                const num2 = parseFloat(rightOperand);
-                let result;
-
-                if ((operator === '/' && num2 === 0) || (operator === '%' && num2 === 0)) {
-                    alert("It's over 9000!");
-                    result = "It's over 9000!";
-                    console.log(result);
+                if (isNaN(result)) {
+                    alert('Error: Invalid calculation.');
                 } else {
-                    switch (operator) {
-                        case '+':
-                            result = num1 + num2;
-                            break;
-                        case '-':
-                            result = num1 - num2;
-                            break;
-                        case '*':
-                            result = num1 * num2;
-                            break;
-                        case '/':
-                            result = num1 / num2;
-                            break;
-                        case '%':
-                            result = num1 % num2;
-                            break;
-                        default:
-                            alert('Error: Invalid operator.');
-                            return;
-                    }
-
-                    if (isNaN(result)) {
-                        alert('Error: Invalid calculation.');
-                    } else {
-                        alert('Result: ' + result);
-                        console.log('Result:', result);
-                    }
+                    alert('Result: ' + result);
+                    console.log('Result:', result);
                 }
-            });
-
-            setInterval(function () {
-                alert('Please, use me...');
-            }, 30000);
+            }
         });
+
+
+        setInterval(function () {
+            alert('Please, use me...');
+        }, 30000);
     </script>
 
 </body>
